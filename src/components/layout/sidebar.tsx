@@ -19,14 +19,14 @@ import { useAuthStore } from '@/store/auth-store'
  * Usa Next.js Link para navegação client-side otimizada
  */
 
-interface NavItem {
+export interface NavItem {
 	title: string
 	href: string
 	icon: React.ComponentType<{ className?: string }>
 	roles: Array<'trade' | 'compras' | 'fornecedor'>
 }
 
-const navItems: NavItem[] = [
+export const navItems: NavItem[] = [
 	{
 		title: 'Dashboard',
 		href: '/dashboard',
@@ -68,19 +68,19 @@ const navItems: NavItem[] = [
 export function Sidebar() {
 	const pathname = usePathname()
 	const { user } = useAuthStore()
-	
+
 	// Filtra itens de menu conforme perfil do usuário
 	const filteredNavItems = navItems.filter((item) =>
 		user ? item.roles.includes(user.role) : false
 	)
-	
+
 	return (
 		<aside className="hidden md:flex md:w-64 md:flex-col">
 			<div className="flex flex-col gap-1 p-4">
 				{filteredNavItems.map((item) => {
 					const Icon = item.icon
 					const isActive = pathname === item.href || pathname?.startsWith(item.href + '/')
-					
+
 					return (
 						<Link
 							key={item.href}
