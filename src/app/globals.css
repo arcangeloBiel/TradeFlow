@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * Estilos globais do TradeMax Havan
+ * Configurações base do Tailwind CSS
+ * Variáveis CSS para tema customizado
+ */
+
+@layer base {
+	:root {
+		--font-inter: 'Inter', system-ui, sans-serif;
+	}
+	
+	* {
+		@apply border-gray-200;
+	}
+	
+	body {
+		@apply bg-white text-gray-900;
+	}
+}
+
+@layer utilities {
+	/* Utilitários customizados podem ser adicionados aqui */
+}
+
