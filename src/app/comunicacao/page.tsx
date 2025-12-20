@@ -15,34 +15,34 @@ import { Plus, Send, Inbox } from 'lucide-react'
 export default function ComunicacaoPage() {
 	const router = useRouter()
 	const { user, isAuthenticated } = useAuthStore()
-	
+
 	useEffect(() => {
 		if (!isAuthenticated) {
 			router.push('/')
 		}
 	}, [isAuthenticated, router])
-	
+
 	if (!user) {
 		return null
 	}
-	
+
 	return (
 		<div className="container mx-auto p-6">
-			<div className="mb-6 flex items-center justify-between">
+			<div className="mb-6 flex items-start justify-between gap-4">
 				<div>
-					<h1 className="text-3xl font-bold text-gray-900">
+					<h1 className="text-xl font-bold text-gray-900 md:text-3xl">
 						Central de Comunicação
 					</h1>
-					<p className="mt-2 text-gray-600">
+					<p className="mt-1 text-sm text-gray-600 md:mt-2 md:text-base">
 						Comunicação integrada entre Trade e Compras
 					</p>
 				</div>
-				<Button>
-					<Plus className="h-4 w-4 mr-2" />
-					Nova Mensagem
+				<Button className="shrink-0 h-8 w-8 p-0 sm:w-auto sm:px-3" size="sm">
+					<Plus className="h-4 w-4 sm:mr-2" />
+					<span className="hidden sm:inline">Nova Mensagem</span>
 				</Button>
 			</div>
-			
+
 			<div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
 				<Card>
 					<CardHeader>
@@ -71,7 +71,7 @@ export default function ComunicacaoPage() {
 									</span>
 								</div>
 							</div>
-							
+
 							<div className="rounded-lg border border-gray-200 p-4">
 								<div className="flex items-start justify-between">
 									<div>
@@ -90,7 +90,7 @@ export default function ComunicacaoPage() {
 						</div>
 					</CardContent>
 				</Card>
-				
+
 				<Card>
 					<CardHeader>
 						<CardTitle className="flex items-center gap-2">
@@ -116,7 +116,7 @@ export default function ComunicacaoPage() {
 									</span>
 								</div>
 							</div>
-							
+
 							<div className="rounded-lg border border-gray-200 p-4">
 								<div>
 									<p className="font-medium text-gray-900">

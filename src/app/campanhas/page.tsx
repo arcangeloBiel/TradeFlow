@@ -18,17 +18,17 @@ import { ptBR } from 'date-fns/locale/pt-BR'
 export default function CampanhasPage() {
 	const router = useRouter()
 	const { user, isAuthenticated } = useAuthStore()
-	
+
 	useEffect(() => {
 		if (!isAuthenticated || user?.role !== 'trade') {
 			router.push('/dashboard')
 		}
 	}, [isAuthenticated, user, router])
-	
+
 	if (!user || user.role !== 'trade') {
 		return null
 	}
-	
+
 	const getStatusColor = (status: string) => {
 		switch (status) {
 			case 'ativa':
@@ -41,24 +41,24 @@ export default function CampanhasPage() {
 				return 'bg-gray-100 text-gray-800'
 		}
 	}
-	
+
 	return (
 		<div className="container mx-auto p-6">
-			<div className="mb-6 flex items-center justify-between">
+			<div className="mb-6 flex items-start justify-between gap-4">
 				<div>
-					<h1 className="text-3xl font-bold text-gray-900">
+					<h1 className="text-xl font-bold text-gray-900 md:text-3xl">
 						Gestão de Campanhas
 					</h1>
-					<p className="mt-2 text-gray-600">
+					<p className="mt-1 text-sm text-gray-600 md:mt-2 md:text-base">
 						Crie e gerencie campanhas promocionais
 					</p>
 				</div>
-				<Button>
-					<Plus className="h-4 w-4 mr-2" />
-					Nova Campanha
+				<Button className="shrink-0 h-8 w-8 p-0 sm:w-auto sm:px-3" size="sm">
+					<Plus className="h-4 w-4 sm:mr-2" />
+					<span className="hidden sm:inline">Nova Campanha</span>
 				</Button>
 			</div>
-			
+
 			<div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
 				{campanhasMock.map((campanha) => (
 					<Card key={campanha.id}>
@@ -87,14 +87,14 @@ export default function CampanhasPage() {
 									})}
 								</span>
 							</div>
-							
+
 							{campanha.roi && (
 								<div className="flex items-center gap-2 text-sm">
 									<DollarSign className="h-4 w-4 text-green-600" />
 									<span className="font-medium">ROI: {campanha.roi}%</span>
 								</div>
 							)}
-							
+
 							{campanha.orcamento && (
 								<div className="flex items-center gap-2 text-sm text-gray-600">
 									<DollarSign className="h-4 w-4" />
@@ -107,7 +107,7 @@ export default function CampanhasPage() {
 									</span>
 								</div>
 							)}
-							
+
 							<div>
 								<div className="mb-2 flex items-center gap-2 text-sm font-medium text-gray-700">
 									<Target className="h-4 w-4" />
@@ -119,7 +119,7 @@ export default function CampanhasPage() {
 									))}
 								</ul>
 							</div>
-							
+
 							<div className="pt-2">
 								<Button variant="outline" className="w-full" size="sm">
 									Ver Detalhes
