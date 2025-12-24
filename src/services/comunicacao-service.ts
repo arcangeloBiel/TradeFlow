@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase/client'
+import { createClient } from '@/lib/supabase/client'
 import { UserRole } from '@/types'
 
 export interface MensagemDB {
@@ -15,7 +15,7 @@ export interface MensagemDB {
 export const comunicacaoService = {
     // Busca mensagens onde o usuário é o destinatário (Recebidas)
     async getMensagensRecebidas(userRole: UserRole): Promise<MensagemDB[]> {
-        const { data, error } = await supabase
+        const { data, error } = await createClient()
             .from('comunicacao')
             .select('*')
             .eq('destinatario_role', userRole)
@@ -30,7 +30,7 @@ export const comunicacaoService = {
 
     // Busca mensagens onde o usuário é o remetente (Enviadas)
     async getMensagensEnviadas(userRole: UserRole): Promise<MensagemDB[]> {
-        const { data, error } = await supabase
+        const { data, error } = await createClient()
             .from('comunicacao')
             .select('*')
             .eq('remetente_role', userRole)

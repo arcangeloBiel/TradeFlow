@@ -1,9 +1,9 @@
-import { supabase } from '@/lib/supabase/client'
+import { createClient } from '@/lib/supabase/client'
 import { KPI, UserRole } from '@/types'
 
 export const dashboardService = {
     async getKPIs(role: UserRole): Promise<KPI[]> {
-        const { data, error } = await supabase
+        const { data, error } = await createClient()
             .from('kpis')
             .select('*')
             .eq('tipo', role)
@@ -13,7 +13,7 @@ export const dashboardService = {
     },
 
     async getVendasPorCategoria() {
-        const { data, error } = await supabase
+        const { data, error } = await createClient()
             .from('analytics_vendas_categoria')
             .select('categoria, vendas')
 
@@ -23,14 +23,14 @@ export const dashboardService = {
         }
 
         // Garante que vendas é número (Supabase pode retornar NUMERIC como string)
-        return data?.map(item => ({
+        return data?.map((item: any) => ({
             ...item,
             vendas: Number(item.vendas)
         })) || []
     },
 
     async getPerformanceMensal() {
-        const { data, error } = await supabase
+        const { data, error } = await createClient()
             .from('analytics_vendas_mensal')
             .select('mes, vendas')
             .order('ordem')
@@ -40,7 +40,7 @@ export const dashboardService = {
             throw error
         }
 
-        return data?.map(item => ({
+        return data?.map((item: any) => ({
             ...item,
             vendas: Number(item.vendas)
         })) || []

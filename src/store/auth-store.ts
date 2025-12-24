@@ -6,47 +6,68 @@
 
 import { create } from 'zustand'
 import type { User, UserRole } from '@/types'
-import { usuariosMock } from '@/data/mocks'
+import { authService } from '@/services/auth-service'
 
 interface AuthState {
 	user: User | null
 	isAuthenticated: boolean
-	login: (email: string, password: string, role: UserRole) => Promise<boolean>
-	logout: () => void
-	setUser: (user: User) => void
+	isLoading: boolean
+	login: (email: string, password: string) => Promise<boolean>
+	logout: () => Promise<void>
+	checkAuth: () => Promise<void>
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
 	user: null,
 	isAuthenticated: false,
-	
-	// Função de login simulada
-	// Em produção, faria chamada à API real
-	login: async (email: string, password: string, role: UserRole) => {
-		// Simula delay de API
-		await new Promise((resolve) => setTimeout(resolve, 500))
-		
-		// Busca usuário mock
-		const user = usuariosMock.find(
-			(u) => u.email === email && u.role === role
-		)
-		
-		if (user) {
-			set({ user, isAuthenticated: true })
-			return true
+	isLoading: true,
+
+	login: async (email, password) => {
+		try {
+			// 1. Autentica no Supabase
+			const data = await authService.signIn(email, password)
+
+			if (data.user) {
+				// 2. Busca perfil (role)
+				const profile = await authService.getUserProfile(data.user.id)
+
+				if (profile) {
+					set({ user: profile, isAuthenticated: true })
+					return true
+				}
+			}
+			return false
+		} catch (error) {
+			console.error('Login error:', error)
+			return false
 		}
-		
-		return false
 	},
-	
-	// Função de logout
-	logout: () => {
+
+	logout: async () => {
+		await authService.signOut()
 		set({ user: null, isAuthenticated: false })
 	},
-	
-	// Define usuário diretamente (útil para testes)
-	setUser: (user: User) => {
-		set({ user, isAuthenticated: true })
+
+	checkAuth: async () => {
+		try {
+			set({ isLoading: true })
+			const currentUser = await authService.getCurrentUser()
+
+			if (currentUser) {
+				const profile = await authService.getUserProfile(currentUser.id)
+				if (profile) {
+					set({ user: profile, isAuthenticated: true })
+				} else {
+					set({ user: null, isAuthenticated: false })
+				}
+			} else {
+				set({ user: null, isAuthenticated: false })
+			}
+		} catch (error) {
+			set({ user: null, isAuthenticated: false })
+		} finally {
+			set({ isLoading: false })
+		}
 	},
 }))
 

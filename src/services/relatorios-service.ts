@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase/client'
+import { createClient } from '@/lib/supabase/client'
 import { UserRole } from '@/types'
 
 export interface Relatorio {
@@ -11,7 +11,7 @@ export interface Relatorio {
 export const relatoriosService = {
     // Busca relatórios por tipo (departamento)
     async getRelatorios(role: UserRole): Promise<Relatorio[]> {
-        const { data, error } = await supabase
+        const { data, error } = await createClient()
             .from('relatorios')
             .select('*')
             // Se o usuário for trade, busca trade. Se for compras, busca compras.

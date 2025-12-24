@@ -11,16 +11,20 @@
 		"db:fix": "node scripts/fix-analytics.js",
 		"db:check": "node scripts/check-db.js",
 		"db:comunicacao": "node scripts/setup-comunicacao.js",
-		"db:relatorios": "node scripts/setup-relatorios.js"
+		"db:relatorios": "node scripts/setup-relatorios.js",
+		"db:auth": "node scripts/setup-auth.js"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^3.3.0",
+		"@radix-ui/react-label": "^2.1.8",
+		"@supabase/ssr": "^0.8.0",
 		"@supabase/supabase-js": "^2.89.0",
 		"@tanstack/react-query": "^5.20.0",
 		"@types/node": "^20.11.0",
 		"@types/react": "^18.3.0",
 		"@types/react-dom": "^18.3.0",
 		"autoprefixer": "^10.4.0",
+		"class-variance-authority": "^0.7.1",
 		"clsx": "^2.1.0",
 		"date-fns": "^3.3.0",
 		"lucide-react": "^0.344.0",

@@ -1,9 +1,9 @@
-import { supabase } from '@/lib/supabase/client'
+import { createClient } from '@/lib/supabase/client'
 import { Campanha, CampanhaStatus, CategoriaProduto } from '@/types'
 
 export const campanhasService = {
     async getCampanhas(): Promise<Campanha[]> {
-        const { data, error } = await supabase
+        const { data, error } = await createClient()
             .from('campanhas')
             .select('*')
             .order('data_inicio', { ascending: false })
