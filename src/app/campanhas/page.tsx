@@ -5,8 +5,9 @@ import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/store/auth-store'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { campanhasMock } from '@/data/mocks'
 import { Plus, Calendar, DollarSign, Target } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
+import { campanhasService } from '@/services/campanhas-service'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale/pt-BR'
 
@@ -19,6 +20,11 @@ export default function CampanhasPage() {
 	const router = useRouter()
 	const { user, isAuthenticated } = useAuthStore()
 
+	const { data: campanhas, isLoading } = useQuery({
+		queryKey: ['campanhas'],
+		queryFn: campanhasService.getCampanhas
+	})
+
 	useEffect(() => {
 		if (!isAuthenticated || user?.role !== 'trade') {
 			router.push('/dashboard')
@@ -27,6 +33,10 @@ export default function CampanhasPage() {
 
 	if (!user || user.role !== 'trade') {
 		return null
+	}
+
+	if (isLoading) {
+		return <div className="p-6">Carregando campanhas...</div>
 	}
 
 	const getStatusColor = (status: string) => {
@@ -60,7 +70,7 @@ export default function CampanhasPage() {
 			</div>
 
 			<div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-				{campanhasMock.map((campanha) => (
+				{campanhas?.map((campanha) => (
 					<Card key={campanha.id}>
 						<CardHeader>
 							<div className="flex items-start justify-between">
@@ -88,14 +98,14 @@ export default function CampanhasPage() {
 								</span>
 							</div>
 
-							{campanha.roi && (
+							{campanha.roi !== undefined && (
 								<div className="flex items-center gap-2 text-sm">
 									<DollarSign className="h-4 w-4 text-green-600" />
 									<span className="font-medium">ROI: {campanha.roi}%</span>
 								</div>
 							)}
 
-							{campanha.orcamento && (
+							{campanha.orcamento !== undefined && (
 								<div className="flex items-center gap-2 text-sm text-gray-600">
 									<DollarSign className="h-4 w-4" />
 									<span>

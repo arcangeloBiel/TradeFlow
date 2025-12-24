@@ -12,64 +12,38 @@ import { FileText, Download, TrendingUp } from 'lucide-react'
  * Exibe relatórios específicos por departamento
  * Permite exportação de dados
  */
+import { useQuery } from '@tanstack/react-query'
+import { relatoriosService } from '@/services/relatorios-service'
+
+/**
+ * Página de relatórios e Business Intelligence
+ * Exibe relatórios específicos por departamento
+ * Permite exportação de dados
+ */
 export default function RelatoriosPage() {
 	const router = useRouter()
 	const { user, isAuthenticated } = useAuthStore()
-	
+
+	const { data: relatorios, isLoading } = useQuery({
+		queryKey: ['relatorios', user?.role],
+		queryFn: () => user ? relatoriosService.getRelatorios(user.role) : Promise.resolve([]),
+		enabled: !!user
+	})
+
 	useEffect(() => {
 		if (!isAuthenticated) {
 			router.push('/')
 		}
 	}, [isAuthenticated, router])
-	
+
 	if (!user) {
 		return null
 	}
-	
-	const relatoriosTrade = [
-		{
-			id: '1',
-			titulo: 'Performance por Categoria',
-			descricao: 'Análise detalhada de vendas e ROI por categoria de produtos',
-			tipo: 'trade',
-		},
-		{
-			id: '2',
-			titulo: 'ROI de Campanhas',
-			descricao: 'Retorno sobre investimento de todas as campanhas promocionais',
-			tipo: 'trade',
-		},
-		{
-			id: '3',
-			titulo: 'Análise de Concorrência',
-			descricao: 'Comparativo de market share e posicionamento competitivo',
-			tipo: 'trade',
-		},
-	]
-	
-	const relatoriosCompras = [
-		{
-			id: '4',
-			titulo: 'Performance de Fornecedores',
-			descricao: 'Avaliação completa de desempenho e entregas',
-			tipo: 'compras',
-		},
-		{
-			id: '5',
-			titulo: 'Análise de Custos',
-			descricao: 'Evolução de custos e economia gerada',
-			tipo: 'compras',
-		},
-		{
-			id: '6',
-			titulo: 'Contratos e Renovações',
-			descricao: 'Status de contratos e prazos de renovação',
-			tipo: 'compras',
-		},
-	]
-	
-	const relatorios = user.role === 'trade' ? relatoriosTrade : relatoriosCompras
-	
+
+	if (isLoading) {
+		return <div className="p-6">Carregando relatórios...</div>
+	}
+
 	return (
 		<div className="container mx-auto p-6">
 			<div className="mb-6">
@@ -80,9 +54,10 @@ export default function RelatoriosPage() {
 					Acesse relatórios detalhados e análises do seu departamento
 				</p>
 			</div>
-			
+
 			<div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-				{relatorios.map((relatorio) => (
+				{relatorios?.length === 0 && <p className="text-gray-500">Nenhum relatório encontrado.</p>}
+				{relatorios?.map((relatorio) => (
 					<Card key={relatorio.id}>
 						<CardHeader>
 							<div className="flex items-start gap-3">
@@ -96,7 +71,7 @@ export default function RelatoriosPage() {
 						</CardHeader>
 						<CardContent className="space-y-4">
 							<p className="text-sm text-gray-600">{relatorio.descricao}</p>
-							
+
 							<div className="flex items-center gap-2">
 								<Button variant="outline" className="flex-1" size="sm">
 									<TrendingUp className="h-4 w-4 mr-2" />
@@ -110,7 +85,7 @@ export default function RelatoriosPage() {
 					</Card>
 				))}
 			</div>
-			
+
 			{/* Relatórios Integrados */}
 			<div className="mt-8">
 				<Card>
@@ -132,7 +107,7 @@ export default function RelatoriosPage() {
 									Visualizar
 								</Button>
 							</div>
-							
+
 							<div className="flex items-center justify-between rounded-lg border border-gray-200 p-4">
 								<div>
 									<p className="font-medium text-gray-900">

@@ -49,13 +49,6 @@ export default function DashboardPage() {
 		return <div className="p-6">Carregando dados...</div>
 	}
 
-	// Debug logs
-	console.log('--- Dashboard Data Debug ---')
-	console.log('User Role:', user.role)
-	console.log('KPIs:', kpis)
-	console.log('Vendas Categoria:', vendasPorCategoria)
-	console.log('Performance Mensal:', performanceData)
-
 	const dashboardTitle =
 		user.role === 'trade'
 			? 'Dashboard Trade Marketing'
