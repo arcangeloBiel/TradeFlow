@@ -14,10 +14,9 @@ export function MobileMenu() {
     const pathname = usePathname()
     const { user } = useAuthStore()
 
-    // Filtra itens de menu conforme perfil do usuário
-    // Reutiliza a mesma lógica do Sidebar para consistência
+    // Filtra itens de menu conforme perfil do usuário (Admin vê tudo)
     const filteredNavItems = navItems.filter((item) =>
-        user ? item.roles.includes(user.role) : false
+        user ? user.role === 'admin' || item.roles.includes(user.role as any) : false
     )
 
     return (
