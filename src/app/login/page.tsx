@@ -51,7 +51,7 @@ export default function LoginPage() {
                     <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-primary-600 text-white">
                         <Lock className="h-6 w-6" />
                     </div>
-                    <CardTitle className="text-2xl font-bold text-gray-900">TradeMax Havan</CardTitle>
+                    <CardTitle className="text-2xl font-bold text-gray-900">TradeMax Jakatech</CardTitle>
                     <p className="text-sm text-gray-500">
                         Entre com suas credenciais para acessar
                     </p>
@@ -65,7 +65,7 @@ export default function LoginPage() {
                                 <Input
                                     id="email"
                                     type="email"
-                                    placeholder="seu.nome@havan.com.br"
+                                    placeholder="seu.nome@jakatech.com.br"
                                     className="pl-9"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}

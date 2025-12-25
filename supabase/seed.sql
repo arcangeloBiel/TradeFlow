@@ -30,8 +30,8 @@ INSERT INTO fornecedores (id, nome, categoria, contato, email, telefone, status,
 
 -- Seed Profiles
 INSERT INTO profiles (id, nome, email, role) VALUES
-('1', 'Ana Silva', 'ana.silva@havan.com.br', 'trade'),
-('2', 'Carlos Mendes', 'carlos.mendes@havan.com.br', 'compras');
+('1', 'Ana Silva', 'ana.silva@jakatech.com.br', 'trade'),
+('2', 'Carlos Mendes', 'carlos.mendes@jakatech.com.br', 'compras');
 
 -- Seed Analytics
 INSERT INTO analytics_vendas_categoria (categoria, vendas) VALUES

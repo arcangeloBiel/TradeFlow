@@ -10,8 +10,8 @@ const client = new Client({
     connectionString: process.env.DATABASE_URL,
 })
 
-const email = process.argv[2] || 'admin@havan.com.br'
-const password = process.argv[3] || 'havan123'
+const email = process.argv[2] || 'admin@jakatech.com.br'
+const password = process.argv[3] || 'jakatech123'
 const name = process.argv[4] || 'Administrador'
 const role = process.argv[5] || 'trade'
 

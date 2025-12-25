@@ -7,8 +7,8 @@ import { Providers } from './providers'
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
 export const metadata: Metadata = {
-	title: 'TradeMax Havan - Trade Marketing',
-	description: 'Sistema de gestão de trade marketing para Havan',
+	title: 'TradeMax Jakatech - Trade Marketing',
+	description: 'Sistema de gestão de trade marketing para Jakatech',
 }
 
 export default function RootLayout({

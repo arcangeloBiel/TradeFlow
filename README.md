@@ -1,4 +1,4 @@
-# TradeFlow
+# TradeFlow (Jakatech)
 Create for marketing in purchases
 
 ## Configuração Supabase

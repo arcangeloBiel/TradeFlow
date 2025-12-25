@@ -1,5 +1,5 @@
 /**
- * Constantes do sistema TradeMax Havan
+ * Constantes do sistema TradeMax Jakatech
  * Centraliza valores fixos e configurações
  */
 

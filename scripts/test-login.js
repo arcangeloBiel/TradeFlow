@@ -9,8 +9,8 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 async function testLogin() {
     console.log('--- Testando Login ---')
     const { data, error } = await supabase.auth.signInWithPassword({
-        email: 'ana.silva@havan.com.br',
-        password: 'havan123'
+        email: 'ana.silva@jakatech.com.br',
+        password: 'jakatech123'
     })
 
     if (error) {
