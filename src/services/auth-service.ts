@@ -52,5 +52,17 @@ export const authService = {
     async getCurrentUser() {
         const { data: { user } } = await createClient().auth.getUser()
         return user
+    },
+
+    // Altera a senha do usuário
+    async updatePassword(password: string) {
+        const { error } = await createClient().auth.updateUser({
+            password: password
+        })
+
+        if (error) {
+            console.error('Erro ao atualizar senha:', error.message)
+            throw error
+        }
     }
 }

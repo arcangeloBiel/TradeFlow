@@ -4,6 +4,7 @@ import { useAuthStore } from '@/store/auth-store'
 import { Button } from '@/components/ui/button'
 import { LogOut, User } from 'lucide-react'
 import { MobileMenu } from './mobile-menu'
+import Link from 'next/link'
 
 /**
  * Componente Header do sistema
@@ -30,7 +31,10 @@ export function Header() {
 
 				{user && (
 					<div className="flex items-center gap-4">
-						<div className="flex items-center gap-2">
+						<Link
+							href="/perfil"
+							className="flex items-center gap-2 hover:bg-gray-50 p-1 rounded-lg transition-colors"
+						>
 							<div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-100 text-primary-700">
 								<User className="h-4 w-4" />
 							</div>
@@ -38,7 +42,7 @@ export function Header() {
 								<p className="text-sm font-medium text-gray-900">{user.nome}</p>
 								<p className="text-xs text-gray-500 capitalize">{user.role}</p>
 							</div>
-						</div>
+						</Link>
 						<Button variant="ghost" size="sm" onClick={logout}>
 							<LogOut className="h-4 w-4 mr-2" />
 							<span className="hidden sm:inline">Sair</span>

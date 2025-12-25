@@ -12,7 +12,8 @@
 		"db:check": "node scripts/check-db.js",
 		"db:comunicacao": "node scripts/setup-comunicacao.js",
 		"db:relatorios": "node scripts/setup-relatorios.js",
-		"db:auth": "node scripts/setup-auth.js"
+		"db:auth": "node scripts/setup-auth.js",
+		"db:create-user": "node scripts/create-user.js"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^3.3.0",

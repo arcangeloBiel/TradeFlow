@@ -15,6 +15,7 @@ interface AuthState {
 	login: (email: string, password: string) => Promise<boolean>
 	logout: () => Promise<void>
 	checkAuth: () => Promise<void>
+	updatePassword: (password: string) => Promise<{ success: boolean; error?: string }>
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -67,6 +68,15 @@ export const useAuthStore = create<AuthState>((set) => ({
 			set({ user: null, isAuthenticated: false })
 		} finally {
 			set({ isLoading: false })
+		}
+	},
+
+	updatePassword: async (password: string) => {
+		try {
+			await authService.updatePassword(password)
+			return { success: true }
+		} catch (error: any) {
+			return { success: false, error: error.message || 'Erro ao atualizar senha' }
 		}
 	},
 }))
