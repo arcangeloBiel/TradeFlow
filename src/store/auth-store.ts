@@ -25,18 +25,24 @@ export const useAuthStore = create<AuthState>((set) => ({
 
 	login: async (email, password) => {
 		try {
+			console.log('Iniciando login para:', email)
 			// 1. Autentica no Supabase
 			const data = await authService.signIn(email, password)
+			console.log('Resposta signIn:', data.user ? 'Usuário autenticado' : 'Falha na autenticação')
 
 			if (data.user) {
 				// 2. Busca perfil (role)
+				console.log('Buscando perfil para id:', data.user.id)
 				const profile = await authService.getUserProfile(data.user.id)
+				console.log('Perfil encontrado:', profile ? 'Sim' : 'Não')
 
 				if (profile) {
 					set({ user: profile, isAuthenticated: true })
+					console.log('Login concluído com sucesso')
 					return true
 				}
 			}
+			console.warn('Login falhou: usuário ou perfil não encontrado')
 			return false
 		} catch (error) {
 			console.error('Login error:', error)

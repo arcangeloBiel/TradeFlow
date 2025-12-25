@@ -1,6 +1,11 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
+// Workaround para erro de SSL em ambiente corporativo (apenas desenvolvimento)
+if (process.env.NODE_ENV === 'development') {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
+}
+
 export async function middleware(request: NextRequest) {
     // 1. Cria uma resposta inicial
     let response = NextResponse.next({
@@ -47,6 +52,8 @@ export async function middleware(request: NextRequest) {
         data: { user },
     } = await supabase.auth.getUser()
 
+    console.log(`Middleware: ${request.nextUrl.pathname} - Usuário: ${user ? user.email : 'Nenhum'}`)
+
     const isProtectedRoute =
         request.nextUrl.pathname.startsWith('/dashboard') ||
         request.nextUrl.pathname.startsWith('/campanhas') ||
@@ -55,10 +62,12 @@ export async function middleware(request: NextRequest) {
 
     // 4. Lógica de Redirecionamento
     if (isProtectedRoute && !user) {
+        console.log('Middleware: Redirecionando para login (Rota protegida)')
         return NextResponse.redirect(new URL('/', request.url))
     }
 
-    if (request.nextUrl.pathname === '/' && user) {
+    if ((request.nextUrl.pathname === '/' || request.nextUrl.pathname === '/login') && user) {
+        console.log('Middleware: Redirecionando para dashboard (Usuário já logado)')
         return NextResponse.redirect(new URL('/dashboard', request.url))
     }
 
