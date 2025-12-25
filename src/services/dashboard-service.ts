@@ -3,10 +3,13 @@ import { KPI, UserRole } from '@/types'
 
 export const dashboardService = {
     async getKPIs(role: UserRole): Promise<KPI[]> {
-        const { data, error } = await createClient()
-            .from('kpis')
-            .select('*')
-            .eq('tipo', role)
+        let query = createClient().from('kpis').select('*')
+
+        if (role !== 'admin') {
+            query = query.eq('tipo', role)
+        }
+
+        const { data, error } = await query
 
         if (error) throw error
         return data as KPI[]

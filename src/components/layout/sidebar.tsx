@@ -23,7 +23,7 @@ export interface NavItem {
 	title: string
 	href: string
 	icon: React.ComponentType<{ className?: string }>
-	roles: Array<'trade' | 'compras' | 'fornecedor'>
+	roles: Array<'trade' | 'compras' | 'fornecedor' | 'admin'>
 }
 
 export const navItems: NavItem[] = [
@@ -69,9 +69,9 @@ export function Sidebar() {
 	const pathname = usePathname()
 	const { user } = useAuthStore()
 
-	// Filtra itens de menu conforme perfil do usuário
+	// Filtra itens de menu conforme perfil do usuário (Admin vê tudo)
 	const filteredNavItems = navItems.filter((item) =>
-		user ? item.roles.includes(user.role) : false
+		user ? user.role === 'admin' || item.roles.includes(user.role as any) : false
 	)
 
 	return (

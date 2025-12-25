@@ -2,7 +2,7 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 -- Enums
-CREATE TYPE user_role AS ENUM ('trade', 'compras', 'fornecedor');
+CREATE TYPE user_role AS ENUM ('trade', 'compras', 'fornecedor', 'admin');
 CREATE TYPE campanha_status AS ENUM ('planejada', 'ativa', 'finalizada', 'cancelada');
 CREATE TYPE categoria_produto AS ENUM ('moda', 'camaMesaBanho', 'eletrodomesticos', 'ferramentas', 'brinquedos', 'tapetes', 'utensiliosDomesticos');
 CREATE TYPE kpi_tendencia AS ENUM ('up', 'down', 'stable');

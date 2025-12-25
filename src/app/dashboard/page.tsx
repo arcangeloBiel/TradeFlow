@@ -50,9 +50,11 @@ export default function DashboardPage() {
 	}
 
 	const dashboardTitle =
-		user.role === 'trade'
-			? 'Dashboard Trade Marketing'
-			: 'Dashboard Compras'
+		user.role === 'admin'
+			? 'Dashboard Geral (Administrativo)'
+			: user.role === 'trade'
+				? 'Dashboard Trade Marketing'
+				: 'Dashboard Compras'
 
 	return (
 		<div className="container mx-auto p-6">

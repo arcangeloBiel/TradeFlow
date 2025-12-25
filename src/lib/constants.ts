@@ -18,7 +18,7 @@ export const CATEGORIAS_NOMES: Record<CategoriaProduto, string> = {
 
 // Rotas protegidas por perfil
 export const ROTAS_POR_PERFIL: Record<
-	'trade' | 'compras' | 'fornecedor',
+	'trade' | 'compras' | 'fornecedor' | 'admin',
 	string[]
 > = {
 	trade: ['/dashboard', '/campanhas', '/comunicacao', '/relatorios'],
@@ -30,6 +30,14 @@ export const ROTAS_POR_PERFIL: Record<
 		'/relatorios',
 	],
 	fornecedor: ['/fornecedor'],
+	admin: [
+		'/dashboard',
+		'/campanhas',
+		'/fornecedores',
+		'/compras',
+		'/comunicacao',
+		'/relatorios',
+	],
 }
 
 // Configurações de cores para gráficos

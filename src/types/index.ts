@@ -4,7 +4,7 @@
  */
 
 // Perfis de usuário do sistema
-export type UserRole = 'trade' | 'compras' | 'fornecedor'
+export type UserRole = 'trade' | 'compras' | 'fornecedor' | 'admin'
 
 // Status de campanha
 export type CampanhaStatus = 'planejada' | 'ativa' | 'finalizada' | 'cancelada'
